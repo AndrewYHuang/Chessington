@@ -24,21 +24,17 @@ namespace Chessington.GameEngine.Pieces
         {
             var currentSquare = board.FindPiece(this);
             var availableMoves = new List<Square>();
+
             if (Player == Player.White)
             {
                 availableMoves.Add(Square.At(currentSquare.Row - 1, currentSquare.Col));
-                if (!this.HasMoved)
-                {
-                    availableMoves.Add(Square.At(currentSquare.Row - 2, currentSquare.Col));
-                }
+                if (!HasMoved) availableMoves.Add(Square.At(currentSquare.Row - 2, currentSquare.Col));
             }
+
             else
             {
                 availableMoves.Add(Square.At(currentSquare.Row + 1, currentSquare.Col));
-                if (!this.HasMoved)
-                {
-                    availableMoves.Add(Square.At(currentSquare.Row + 2, currentSquare.Col));
-                }
+                if (!HasMoved) availableMoves.Add(Square.At(currentSquare.Row + 2, currentSquare.Col));
             }
             return availableMoves;
         }
