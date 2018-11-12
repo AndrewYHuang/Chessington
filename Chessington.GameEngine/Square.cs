@@ -49,5 +49,11 @@
         {
             return string.Format("Row {0}, Col {1}", Row, Col);
         }
+
+        public bool IsValid()
+        {
+            return Col >= 0 && Col < GameSettings.BoardSize &&
+                   Row >= 0 && Row < GameSettings.BoardSize;
+        }
     }
 }
