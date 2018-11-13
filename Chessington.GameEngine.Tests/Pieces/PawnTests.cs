@@ -201,5 +201,173 @@ namespace Chessington.GameEngine.Tests.Pieces
             moves.Should().NotContain(Square.At(6, 2));
             moves.Should().NotContain(Square.At(6, 4));
         }
+
+        [Test]
+        public void BlackPawns_CanEnPassant_OnLeft()
+        {
+            var board = new Board();
+            var pawn = new Pawn(Player.Black);
+            board.AddPiece(Square.At(4, 3), pawn);
+
+            var enemyPawn = new Pawn(Player.White);
+            board.AddPiece(Square.At(6, 2), enemyPawn);
+
+            enemyPawn.MoveTo(board, Square.At(4, 2));
+
+            var moves = pawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().Contain(Square.At(5, 2));
+        }
+        [Test]
+        public void BlackPawns_CanEnPassant_OnRight()
+        {
+            var board = new Board();
+            var pawn = new Pawn(Player.Black);
+            board.AddPiece(Square.At(4, 3), pawn);
+
+            var enemyPawn = new Pawn(Player.White);
+            board.AddPiece(Square.At(6, 4), enemyPawn);
+
+            enemyPawn.MoveTo(board, Square.At(4, 4));
+
+            var moves = pawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().Contain(Square.At(5, 4));
+        }
+
+        [Test]
+        public void WhitePawns_CanEnPassant()
+        {
+            var board = new Board();
+            var pawn = new Pawn(Player.White);
+            board.AddPiece(Square.At(7, 3), pawn);
+
+            pawn.MoveTo(board, Square.At(6, 3));
+
+            var enemyPawn = new Pawn(Player.Black);
+            board.AddPiece(Square.At(4, 4), enemyPawn);
+
+            enemyPawn.MoveTo(board, Square.At(6, 4));
+
+            var moves = pawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().Contain(Square.At(5, 4));
+
+            pawn.MoveTo(board, Square.At(5, 3));
+
+            var enemyPawn2 = new Pawn(Player.Black);
+            board.AddPiece(Square.At(3, 2), enemyPawn2);
+
+            enemyPawn2.MoveTo(board, Square.At(5, 2));
+
+            moves = pawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().Contain(Square.At(4, 2));
+        }
+
+        [Test]
+        public void BlackPawns_CanNotEnPassant_IfThereIsNoPiece()
+        {
+            var board = new Board();
+            var pawn = new Pawn(Player.Black);
+            board.AddPiece(Square.At(4, 3), pawn);
+
+            var moves = pawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().NotContain(Square.At(5, 4));
+            moves.Should().NotContain(Square.At(5, 6));
+        }
+
+        [Test]
+        public void WhitePawns_CanNotEnPassant_IfThereIsNoPiece()
+        {
+            var board = new Board();
+            var pawn = new Pawn(Player.White);
+            board.AddPiece(Square.At(4, 3), pawn);
+
+            var moves = pawn.GetAvailableMoves(board).ToList();
+
+            moves.Should().NotContain(Square.At(3, 4));
+            moves.Should().NotContain(Square.At(3, 6));
+        }
+
+        [Test]
+        public void BlackPawns_CanNotEnPassant_IfPieceDidNotMoveTwice()
+        {
+            var board = new Board();
+            var pawn = new Pawn(Player.Black);
+            board.AddPiece(Square.At(4, 3), pawn);
+
+            var enemyPawn = new Pawn(Player.White);
+            board.AddPiece(Square.At(5, 4), enemyPawn);
+
+            enemyPawn.MoveTo(board, Square.At(4, 4));
+
+            var moves = pawn.GetAvailableMoves(board).ToList();
+            
+
+            moves.Should().NotContain(Square.At(5, 4));
+            moves.Should().NotContain(Square.At(5, 6));
+        }
+        [Test]
+        public void WhitePawns_CanNotEnPassant_IfPieceDidNotMoveTwice()
+        {
+            var board = new Board();
+            var pawn = new Pawn(Player.White);
+            board.AddPiece(Square.At(5, 3), pawn);
+            pawn.MoveTo(board, Square.At(4, 3));
+            var enemyPawn = new Pawn(Player.Black);
+            board.AddPiece(Square.At(3, 4), enemyPawn);
+
+            enemyPawn.MoveTo(board, Square.At(4, 4));
+
+            var moves = pawn.GetAvailableMoves(board).ToList();
+
+
+            moves.Should().NotContain(Square.At(3, 4));
+        }
+
+        [Test]
+        public void BlackPawns_CanNotEnPassant_IfPieceIsNotPawn()
+        {
+            var board = new Board();
+            var pawn = new Pawn(Player.Black);
+            board.AddPiece(Square.At(4, 3), pawn);
+
+            var enemyUnit = new Rook(Player.White);
+            board.AddPiece(Square.At(5, 4), enemyUnit);
+
+            enemyUnit.MoveTo(board, Square.At(4, 4));
+
+            var moves = pawn.GetAvailableMoves(board).ToList();
+
+
+            moves.Should().NotContain(Square.At(5, 4));
+            moves.Should().NotContain(Square.At(5, 6));
+        }
+        [Test]
+        public void BlackPawns_CanNotEnPassant_IfTurnPassed()
+        {
+            var board = new Board();
+            var pawn = new Pawn(Player.Black);
+            board.AddPiece(Square.At(4, 3), pawn);
+
+            var otherPawn = new Pawn(Player.Black);
+            board.AddPiece(Square.At(1, 1), otherPawn);
+
+            var enemyPawn = new Pawn(Player.White);
+            board.AddPiece(Square.At(6, 4), enemyPawn);
+
+            enemyPawn.MoveTo(board, Square.At(4, 4));
+
+            otherPawn.MoveTo(board, Square.At(2, 1));
+
+
+            var moves = pawn.GetAvailableMoves(board).ToList();
+
+
+            moves.Should().NotContain(Square.At(5, 4));
+        }
+
     }
 }
