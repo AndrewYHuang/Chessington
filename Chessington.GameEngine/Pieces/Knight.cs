@@ -14,8 +14,19 @@ namespace Chessington.GameEngine.Pieces
             foreach (var i in new [] {-2, 2})
             foreach (var j in new [] {-1, 1})
             {
-                availableMoves.Add(new Square(currentSquare.Row + i, currentSquare.Col + j));
-                availableMoves.Add(new Square(currentSquare.Row + j, currentSquare.Col + i));
+                var destinationSquare = new Square(currentSquare.Row + i, currentSquare.Col + j);
+                if (board.SquareIsEmpty(destinationSquare) ||
+                    board.SquareHasEnemy(destinationSquare))
+                {
+                    availableMoves.Add(destinationSquare);
+                }
+
+                destinationSquare = new Square(currentSquare.Row + j, currentSquare.Col + i);
+                if (board.SquareIsEmpty(destinationSquare) ||
+                    board.SquareHasEnemy(destinationSquare))
+                {
+                    availableMoves.Add(destinationSquare);
+                }
             }
 
             availableMoves.RemoveAll(s => !s.IsValid());

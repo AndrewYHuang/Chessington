@@ -98,7 +98,7 @@ namespace Chessington.GameEngine
 
         public bool SquareHasFriendly(Square square)
         {
-            return square.IsValid() && GetPiece(square).Player == CurrentPlayer;
+            return square.IsValid() && GetPiece(square) != null && GetPiece(square).Player == CurrentPlayer;
         }
 
         public bool SquareHasEnemy(Square square)
