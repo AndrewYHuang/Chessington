@@ -96,14 +96,14 @@ namespace Chessington.GameEngine
             return square.IsValid() && GetPiece(square) != null;
         }
 
-        public bool SquareHasFriendly(Square square)
+        public bool SquareHasFriendly(Square square, Player player)
         {
-            return square.IsValid() && GetPiece(square) != null && GetPiece(square).Player == CurrentPlayer;
+            return square.IsValid() && GetPiece(square) != null && GetPiece(square).Player == player;
         }
 
-        public bool SquareHasEnemy(Square square)
+        public bool SquareHasEnemy(Square square, Player player)
         {
-            return square.IsValid() && GetPiece(square) != null && GetPiece(square).Player != CurrentPlayer;
+            return square.IsValid() && GetPiece(square) != null && GetPiece(square).Player != player;
         }
 
     }

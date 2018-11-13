@@ -14,7 +14,7 @@ namespace Chessington.GameEngine.Pieces
             var moveDirections = new[,] { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
             for (var i = 0; i < 4; i++)
             {
-                AddMoveDirection(currentSquare, board, moveDirections[i, 0], moveDirections[i, 1], lateralMoves);
+                AddMoveDirection(currentSquare, board, piece, moveDirections[i, 0], moveDirections[i, 1], lateralMoves);
             }
 
 
@@ -32,12 +32,12 @@ namespace Chessington.GameEngine.Pieces
             var moveDirections = new [,] {{1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
             for (var i = 0; i < 4; i++)
             {
-                AddMoveDirection( currentSquare, board, moveDirections[i,0], moveDirections[i,1], diagonalMoves);
+                AddMoveDirection( currentSquare, board, piece, moveDirections[i,0], moveDirections[i,1], diagonalMoves);
             }
 
             return diagonalMoves;
         }
-        public static void AddMoveDirection(Square currentSquare, Board board, int rowDirection, int colDirection, ICollection<Square> moves)
+        public static void AddMoveDirection(Square currentSquare, Board board, Piece piece, int rowDirection, int colDirection, ICollection<Square> moves)
         {
             for (int i = currentSquare.Row + rowDirection, j = currentSquare.Col + colDirection;;
                     i += rowDirection, j += colDirection)
@@ -47,7 +47,7 @@ namespace Chessington.GameEngine.Pieces
                 {
                     moves.Add(nextSquare);
                 }
-                else if (board.SquareHasEnemy(nextSquare))
+                else if (board.SquareHasEnemy(nextSquare, piece.Player))
                 {
                     moves.Add(nextSquare);
                     break;

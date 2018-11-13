@@ -22,7 +22,7 @@ namespace Chessington.GameEngine.Pieces
         public void AddAttackOrMove(Board board, Square destinationSquare, ICollection<Square> moves)
         {
             if (board.SquareIsEmpty(destinationSquare) ||
-                board.SquareHasEnemy(destinationSquare))
+                board.SquareHasEnemy(destinationSquare, Player))
             {
                 moves.Add(destinationSquare);
             }

@@ -26,7 +26,6 @@ namespace Chessington.GameEngine.Pieces
             var direction = (Player == Player.White) ? -1 : 1;
 
             var squareInFront = Square.At(currentSquare.Row + direction, currentSquare.Col);
-
             if (board.SquareIsEmpty(squareInFront))
             {
                 availableMoves.Add(squareInFront);
@@ -36,6 +35,18 @@ namespace Chessington.GameEngine.Pieces
                 {
                     availableMoves.Add(squareTwoInFront);
                 }
+            }
+
+            var attackingSquareLeft = Square.At(currentSquare.Row + direction, currentSquare.Col+1);
+            if (board.SquareHasEnemy(attackingSquareLeft, Player))
+            {
+                availableMoves.Add(attackingSquareLeft);
+            }
+
+            var attackingSquareRight = Square.At(currentSquare.Row + direction, currentSquare.Col-1);
+            if (board.SquareHasEnemy(attackingSquareRight, Player))
+            {
+                availableMoves.Add(attackingSquareRight);
             }
             return availableMoves;
         }
