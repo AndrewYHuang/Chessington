@@ -27,7 +27,7 @@ namespace Chessington.GameEngine.Pieces
             Direction = (Player == Player.White) ? -1 : 1;
         }
 
-        public new void MoveTo(Board board, Square newSquare)
+        public override void MoveTo(Board board, Square newSquare)
         {
             var currentSquare = board.FindPiece(this);
             base.MoveTo(board, newSquare);
