@@ -18,5 +18,14 @@ namespace Chessington.GameEngine.Pieces
             var currentSquare = board.FindPiece(this);
             board.MovePiece(currentSquare, newSquare);
         }
+
+        public void AddAttackOrMove(Board board, Square destinationSquare, ICollection<Square> moves)
+        {
+            if (board.SquareIsEmpty(destinationSquare) ||
+                board.SquareHasEnemy(destinationSquare))
+            {
+                moves.Add(destinationSquare);
+            }
+        }
     }
 }

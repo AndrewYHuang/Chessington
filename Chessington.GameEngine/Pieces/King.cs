@@ -16,13 +16,7 @@ namespace Chessington.GameEngine.Pieces
             for (var i = -1; i <= 1; i++)
             for (var j = -1; j <= 1; j++)
             {
-                var destinationSquare = new Square(currentSquare.Row + i, currentSquare.Col + j);
-                if (board.SquareIsEmpty(destinationSquare) ||
-                    board.SquareHasEnemy(destinationSquare))
-                {
-                    availableMoves.Add(destinationSquare);
-                }
-                    
+                AddAttackOrMove(board, new Square(currentSquare.Row + i, currentSquare.Col + j), availableMoves);
             }
             return availableMoves;
         }
