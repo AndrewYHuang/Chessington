@@ -27,12 +27,12 @@ namespace Chessington.GameEngine.Pieces
 
             var squareInFront = Square.At(currentSquare.Row + direction, currentSquare.Col);
 
-            if (squareInFront.IsEmpty(board))
+            if (board.SquareIsEmpty(squareInFront))
             {
                 availableMoves.Add(squareInFront);
 
                 var squareTwoInFront = Square.At(currentSquare.Row + direction + direction, currentSquare.Col);
-                if (!HasMoved && squareTwoInFront.IsEmpty(board))
+                if (!HasMoved && board.SquareIsEmpty(squareTwoInFront))
                 {
                     availableMoves.Add(squareTwoInFront);
                 }

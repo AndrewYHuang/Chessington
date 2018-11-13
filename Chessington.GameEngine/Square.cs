@@ -56,10 +56,5 @@
                    Row >= 0 && Row < GameSettings.BoardSize;
         }
 
-        public bool IsEmpty(Board board)
-        {
-            return IsValid() && board.GetPiece(this) == null;
-        }
-
     }
 }

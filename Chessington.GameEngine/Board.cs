@@ -84,5 +84,27 @@ namespace Chessington.GameEngine
             var handler = CurrentPlayerChanged;
             if (handler != null) handler(player);
         }
+
+
+        public bool SquareIsEmpty(Square square)
+        {
+            return square.IsValid() && GetPiece(square) == null;
+        }
+
+        public bool SquareIsOccupied(Square square)
+        {
+            return square.IsValid() && GetPiece(square) != null;
+        }
+
+        public bool SquareHasFriendly(Square square)
+        {
+            return square.IsValid() && GetPiece(square).Player == CurrentPlayer;
+        }
+
+        public bool SquareHasEnemy(Square square)
+        {
+            return square.IsValid() && GetPiece(square) != null && GetPiece(square).Player != CurrentPlayer;
+        }
+
     }
 }
