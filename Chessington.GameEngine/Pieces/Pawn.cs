@@ -23,16 +23,19 @@ namespace Chessington.GameEngine.Pieces
             var currentSquare = board.FindPiece(this);
             var availableMoves = new List<Square>();
 
-            if (Player == Player.White)
-            {
-                availableMoves.Add(Square.At(currentSquare.Row - 1, currentSquare.Col));
-                if (!HasMoved) availableMoves.Add(Square.At(currentSquare.Row - 2, currentSquare.Col));
-            }
+            var direction = (Player == Player.White) ? -1 : 1;
 
-            else
+            var squareInFront = Square.At(currentSquare.Row + direction, currentSquare.Col);
+
+            if (squareInFront.IsEmpty(board))
             {
-                availableMoves.Add(Square.At(currentSquare.Row + 1, currentSquare.Col));
-                if (!HasMoved) availableMoves.Add(Square.At(currentSquare.Row + 2, currentSquare.Col));
+                availableMoves.Add(squareInFront);
+
+                var squareTwoInFront = Square.At(currentSquare.Row + direction + direction, currentSquare.Col);
+                if (!HasMoved && squareTwoInFront.IsEmpty(board))
+                {
+                    availableMoves.Add(squareTwoInFront);
+                }
             }
             return availableMoves;
         }
